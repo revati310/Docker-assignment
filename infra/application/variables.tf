@@ -15,3 +15,13 @@ variable "ports" {
     description = "ports to be allowed ingress"
   
 }
+variable "image_mutability" {
+  default = "IMMUTABLE"
+  type = string
+  description = "flag for image immutability"
+}
+variable "encryption_kind" {
+    default = "KMS"
+    type = string
+    description = "kind of encryption"
+}

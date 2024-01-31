@@ -40,8 +40,7 @@ resource "aws_instance" "my_amazon" {
   }
   tags = {
       "Name" = "${var.prefix}-server"
-    }
-  
+    } 
 }
 
 
@@ -83,10 +82,21 @@ resource "aws_security_group" "web_sg" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
-
   tags = {
-    
         "Name" = "${var.prefix}-server-sg"
     }
-  
+}
+
+resource "aws_ecr_repository" "ecr" {
+  name = "image-repo-assignment1"
+  image_tag_mutability = var.image_mutability
+  encryption_configuration {
+    encryption_type = var.encryption_kind
+  }
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+  tags = {
+    Name="${var.prefix}-ECR"
+  }
 }
