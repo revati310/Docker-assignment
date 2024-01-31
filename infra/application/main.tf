@@ -88,7 +88,8 @@ resource "aws_security_group" "web_sg" {
 }
 
 resource "aws_ecr_repository" "ecr" {
-  name = "image-repo-assignment1"
+  for_each = toset(var.repo_name)
+  name = each.key
   image_tag_mutability = var.image_mutability
   encryption_configuration {
     encryption_type = var.encryption_kind

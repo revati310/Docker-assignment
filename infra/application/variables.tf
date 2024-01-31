@@ -15,6 +15,12 @@ variable "ports" {
     description = "ports to be allowed ingress"
   
 }
+variable "repo_name" {
+    type = list(string)
+    default = ["app-repo","db-repo"]
+    description = "repo names for app and db"
+  
+}
 variable "image_mutability" {
   default = "IMMUTABLE"
   type = string
