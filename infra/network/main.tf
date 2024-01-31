@@ -6,8 +6,8 @@ resource "aws_vpc" "main" {
   cidr_block       = var.vpc_cidr_block
   instance_tenancy = "default"
   tags = {
-      Name = "${var.prefix}-vpc"
-    }
+    Name = "${var.prefix}-vpc"
+  }
 }
 
 data "aws_availability_zones" "available" {
@@ -15,13 +15,13 @@ data "aws_availability_zones" "available" {
 }
 
 resource "aws_subnet" "public_subnet" {
-  vpc_id            = aws_vpc.main.id
+  vpc_id     = aws_vpc.main.id
   cidr_block = var.public_cidr
   //cidr_block        = var.public_cidr
-  availability_zone = data.aws_availability_zones.available.names[count.index]
+  availability_zone = data.aws_availability_zones.available.names
   tags = {
-      Name = "${var.prefix}-public-subnet"
-    }
+    Name = "${var.prefix}-public-subnet"
+  }
 }
 
 
@@ -29,8 +29,8 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-      "Name" = "${var.prefix}-igw"
-    }
+    "Name" = "${var.prefix}-igw"
+  }
 }
 
 resource "aws_route_table" "public_route_table" {

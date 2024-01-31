@@ -1,5 +1,5 @@
 variable "prefix" {
-    default = "docker"
+  default     = "docker"
   type        = string
   description = "Name prefix"
 }
