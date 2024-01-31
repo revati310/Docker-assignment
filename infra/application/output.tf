@@ -1,3 +1,3 @@
-output "vpc_block" {
+output "public_ip" {
   value = aws_instance.my_amazon.public_ip
 }
