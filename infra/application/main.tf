@@ -34,7 +34,7 @@ resource "aws_instance" "my_amazon" {
   root_block_device {
     encrypted = true
   }
-
+  user_data = file("${path.path.module}/installdocker.sh")
   lifecycle {
     create_before_destroy = true
   }
