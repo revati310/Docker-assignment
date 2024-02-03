@@ -10,7 +10,7 @@ variable "prefix" {
 }
 
 variable "ports" {
-  default     = ["80", "81", "82"]
+  default     = ["8080", "8081", "8082"]
   type        = list(string)
   description = "ports to be allowed ingress"
 
