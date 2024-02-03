@@ -2,3 +2,4 @@
 /infra/network/.terraform
 infra/application/.terraform.lock.hcl
 infra/network/.terraform.lock.hcl
+README.md
