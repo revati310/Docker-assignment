@@ -31,6 +31,7 @@ resource "aws_instance" "my_amazon" {
   subnet_id                   = data.terraform_remote_state.network.outputs.subnet_block
   security_groups             = [aws_security_group.web_sg.id]
   associate_public_ip_address = true
+  
   root_block_device {
     encrypted = true
   }
@@ -100,4 +101,120 @@ resource "aws_ecr_repository" "ecr" {
   tags = {
     Name = "${var.prefix}-ECR"
   }
+}
+
+resource "aws_lb" "alb" {
+  name = "${var.prefix}-application-lb"
+  #tfsec:ignore:aws-elb-alb-not-public
+  internal                   = false
+  load_balancer_type         = "application"
+  security_groups            = [aws_security_group.web_sg.id]
+  subnets                    = data.terraform_remote_state.network.outputs.subnet_block
+  drop_invalid_header_fields = true
+  tags ={
+      "Name" = "${var.prefix}-ALB"
+    }
+
+}
+
+resource "aws_lb_target_group" "tg-lime" {
+  name     = "${var.prefix}-lb-target-group"
+  port     = 8080
+  protocol = "HTTP"
+  vpc_id   = data.terraform_remote_state.network.outputs.vpc_block
+
+  health_check {
+    path     = "/"
+    matcher  = 200
+    interval = 5
+    timeout  = 2
+  }
+
+  tags = {
+      "Name" = "${var.prefix}-ALBTargetGroup"
+    }
+}
+
+
+
+#tfsec:ignore:aws-elb-http-not-used
+resource "aws_lb_listener" "alb_listener-lime" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "80"
+  protocol          = "HTTP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tg-lime.arn
+  }
+  tags ={
+      "Name" = "${var.prefix}-ALBListener"
+    }  
+}
+
+resource "aws_lb_target_group" "tg-pink" {
+  name     = "${var.prefix}-lb-target-group"
+  port     = 8082
+  protocol = "HTTP"
+  vpc_id   = data.terraform_remote_state.network.outputs.vpc_block
+
+  health_check {
+    path     = "/"
+    matcher  = 200
+    interval = 5
+    timeout  = 2
+  }
+
+  tags = {
+      "Name" = "${var.prefix}-ALBTargetGroup"
+    }
+}
+
+
+
+#tfsec:ignore:aws-elb-http-not-used
+resource "aws_lb_listener" "alb_listener-pink" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "82"
+  protocol          = "HTTP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tg-lime.arn
+  }
+  tags ={
+      "Name" = "${var.prefix}-ALBListener"
+    }  
+}
+
+resource "aws_lb_target_group" "tg-blue" {
+  name     = "${var.prefix}-lb-target-group"
+  port     = 8081
+  protocol = "HTTP"
+  vpc_id   = data.terraform_remote_state.network.outputs.vpc_block
+
+  health_check {
+    path     = "/"
+    matcher  = 200
+    interval = 5
+    timeout  = 2
+  }
+
+  tags = {
+      "Name" = "${var.prefix}-ALBTargetGroup"
+    }
+}
+
+
+
+#tfsec:ignore:aws-elb-http-not-used
+resource "aws_lb_listener" "alb_listener-blue" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "81"
+  protocol          = "HTTP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tg-blue.arn
+  }
+  tags ={
+      "Name" = "${var.prefix}-ALBListener"
+    }  
 }
