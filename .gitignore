@@ -3,3 +3,4 @@
 infra/application/.terraform.lock.hcl
 infra/network/.terraform.lock.hcl
 README.md
+infra/application/README.MD
