@@ -5,3 +5,4 @@ sudo systemctl start docker
 sudo systemctl enable docker
 sudo systemctl status docker
 sudo docker usermod -a -G docker ec2-user
+
