@@ -169,8 +169,6 @@ resource "aws_lb_target_group" "tg-pink" {
     }
 }
 
-
-
 #tfsec:ignore:aws-elb-http-not-used
 resource "aws_lb_listener" "alb_listener-pink" {
   load_balancer_arn = aws_lb.alb.arn
