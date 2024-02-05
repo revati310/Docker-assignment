@@ -3,6 +3,6 @@
 infra/application/.terraform.lock.hcl
 infra/network/.terraform.lock.hcl
 README.md
-infra/application/README.MD
-infra/application/docker-key
-infra/application/docker-key.pub
+/infra/application/README.MD
+/infra/application/docker-key
+/infra/application/docker-key.pub
