@@ -18,3 +18,4 @@ docker run -p 8080:8080 --name lime --network NW-REVATI -e DBHOST=$DBHOST -e DBP
 docker run -p 8081:8080 --name blue --network NW-REVATI -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e APP_COLOR=${APP_COLOR} ${ECR}:v0.1
 
 docker run -p 8082:8080  --name pink --network NW-REVATI -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e APP_COLOR=${APP_COLOR} ${ECR}:v0.1
+ggg
